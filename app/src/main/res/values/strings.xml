@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Movies</string>
+    <string name="results">Results</string>
+    <string name="mainString1">Movie title:</string>
+    <string name="mainString2">Genres:</string>
+    <string name="mainString3">Actor/Actress1:</string>
+    <string name="mainString4">Actor/Actress2:</string>
+    <string name="mainString5">Actor/Actress3:</string>
+    <string name="mainString6">Start year:</string>
+    <string name="mainString7">Country:</string>
+    <string name="mainString8">Director:</string>
+
+    <string name="mainstring_submit">Search</string>
+</resources>
