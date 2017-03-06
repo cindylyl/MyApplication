@@ -9,10 +9,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Result extends AppCompatActivity implements resultAdapter.onClickHandler{
     TextView movieTextView;
-    String[] movies={"http://google.com","http://baidu.com","http://apple.com","http://apple.com",
-            "http://apple.com","http://baidu.com","http://baidu.com","http://baidu.com","http://baidu.com"};
+    //String[] movies={"http://google.com","http://baidu.com","http://apple.com","http://apple.com",
+     //       "http://apple.com","http://baidu.com","http://baidu.com","http://baidu.com","http://baidu.com"};
+    JSONObject json = null;
+    ArrayList<Movie> movies = new ArrayList<Movie>();
 
 
     @Override
@@ -26,19 +35,51 @@ public class Result extends AppCompatActivity implements resultAdapter.onClickHa
 //            movieTextView.append(m);
 //        }
 
+        Intent resultIntent=getIntent();
+        if (resultIntent.hasExtra(Intent.EXTRA_TEXT)){
+            String intentText = resultIntent.getStringExtra(Intent.EXTRA_TEXT);
+            try {
+                json = new JSONObject(intentText);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                JSONArray m = json.getJSONArray("movies");
+                for (int i = 0; i < m.length(); i++) {
+                    Movie movie = new Movie();
+                    JSONObject jsonObject = m.getJSONObject(i);
+                    movie.setTitle(jsonObject.getString("movie_title"));
+                    movie.setGernes(jsonObject.getString("genres"));
+                    movie.setLink(jsonObject.getString("title_year"));
+                    movies.add(movie);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(movies);
+
         RecyclerView mRecycleView =(RecyclerView) findViewById(R.id.rv_results);
 
-        resultAdapter adapter =new resultAdapter(this);
+        resultAdapter adapter =new resultAdapter(movies);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         mRecycleView.setAdapter(adapter);
         mRecycleView.setLayoutManager(layoutManager);
 
-        adapter.setMovieArray(movies);
+
+
+            //adapter.setMovieArray(movies);
+        }
+
+        //adapter.setMovieArray(movies);
         //movieTextView=(TextView) findViewById(R.id.tv_movieItem);
 
 
     }
+
+
 
     @Override
     public void click(String s) {

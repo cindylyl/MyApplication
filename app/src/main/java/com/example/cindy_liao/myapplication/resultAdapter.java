@@ -7,36 +7,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by cindy_liao on 26/02/2017.
  */
 
 public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltViewHolder> {
-    private String[] movieArray;
-    private final onClickHandler mOnClickHandler;
+    private ArrayList<Movie> movieArray;
+    //private final onClickHandler mOnClickHandler;
 
     interface onClickHandler{
         void click(String s);
     }
 
-    public resultAdapter(onClickHandler handler){
-        mOnClickHandler=handler;
+//    public resultAdapter(onClickHandler handler){
+//        mOnClickHandler=handler;
+//    }
+    public resultAdapter(ArrayList<Movie> movieArrayList){
+        this.movieArray=movieArrayList;
     }
 
-    public class resutltViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView resutltTextView;
+    public class resutltViewHolder extends RecyclerView.ViewHolder {
+        TextView resutltTextViewLink;
+        TextView resultTextViewName;
+        TextView resultTextViewGenres;
         public resutltViewHolder(View v){
             super(v);
-            resutltTextView=(TextView) v.findViewById(R.id.tv_movieItem);
-            v.setOnClickListener(this);
+            resultTextViewName=(TextView) v.findViewById(R.id.tv_movieItemName);
+            resutltTextViewLink=(TextView) v.findViewById(R.id.tv_movieItemLink);
+            resultTextViewGenres=(TextView) v.findViewById(R.id.tv_movieItemGenres);
+            //v.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            int posithon = getAdapterPosition();
-            String movieData = movieArray[posithon];
-            mOnClickHandler.click(movieData);
-        }
+//        @Override
+//        public void onClick(View v) {
+//            int posithon = getAdapterPosition();
+//            String movieData = movieArray[posithon];
+//            mOnClickHandler.click(movieData);
+//        }
 
 
     }
@@ -53,8 +62,13 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
 
     @Override
     public void onBindViewHolder(resutltViewHolder holder, int position) {
-        String movie = movieArray[position];
-        holder.resutltTextView.setText(movie);
+
+//        String movie = movieArray[position];
+//        holder.resutltTextViewLink.setText(movie);
+        Movie movie=movieArray.get(position);
+        holder.resultTextViewGenres.setText(movie.getGernes());
+        holder.resultTextViewName.setText(movie.getTitle());
+        holder.resutltTextViewLink.setText(movie.getLink());
     }
 
     @Override
@@ -62,11 +76,11 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
         if (movieArray==null)
             return 0;
         else
-            return movieArray.length;
+            return movieArray.size();
     }
 
-    public void setMovieArray (String[] movies){
-        movieArray=movies;
-        notifyDataSetChanged();
-    }
+//    public void setMovieArray (String[] movies){
+//        movieArray=movies;
+//        notifyDataSetChanged();
+//    }
 }
