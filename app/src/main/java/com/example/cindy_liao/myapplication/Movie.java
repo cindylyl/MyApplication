@@ -8,16 +8,16 @@ package com.example.cindy_liao.myapplication;
  */
 
 public class Movie{
-    private String title,link, gernes;
+    private String title,link,gernes,year;
 
     public Movie() {
 
     }
-    public Movie(String m_title,String m_link, String m_gernes){
-        this.title=m_title;
-        this.gernes=m_gernes;
-        this.link=m_link;
-    }
+//    public Movie(String m_title,String m_link, String m_gernes){
+//        this.title=m_title;
+//        this.gernes=m_gernes;
+//        this.link=m_link;
+//    }
 
     public String getTitle() {
         return title;
@@ -42,4 +42,12 @@ public class Movie{
     public void setGernes(String gernes) {
         this.gernes = gernes;
     }
+
+    public String getYear(){
+        return year;
+    }
+    public void setYear(String year){
+        this.year=year;
+    }
+
 }

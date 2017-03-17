@@ -32,11 +32,13 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
         TextView resutltTextViewLink;
         TextView resultTextViewName;
         TextView resultTextViewGenres;
+        TextView resultTextViewYear;
         public resutltViewHolder(View v){
             super(v);
             resultTextViewName=(TextView) v.findViewById(R.id.tv_movieItemName);
             resutltTextViewLink=(TextView) v.findViewById(R.id.tv_movieItemLink);
             resultTextViewGenres=(TextView) v.findViewById(R.id.tv_movieItemGenres);
+            resultTextViewYear= (TextView) v.findViewById(R.id.tv_movieItemYear);
             //v.setOnClickListener(this);
         }
 
@@ -69,6 +71,7 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
         holder.resultTextViewGenres.setText(movie.getGernes());
         holder.resultTextViewName.setText(movie.getTitle());
         holder.resutltTextViewLink.setText(movie.getLink());
+        holder.resultTextViewYear.setText(movie.getYear());
     }
 
     @Override
