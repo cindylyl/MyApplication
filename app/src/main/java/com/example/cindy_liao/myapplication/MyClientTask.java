@@ -22,7 +22,9 @@ import java.net.UnknownHostException;
 
 public class MyClientTask extends AsyncTask<String, Void, String> {
 
-    private String dstAddress="10.243.42.157";
+//    private String dstAddress="137.207.64.143";
+    private String dstAddress="10.241.36.172";
+
     private int dstPort=5001;
     private String response = "";
     private String[] tag = {"movie_title","genres", "actor_1_name","actor_2_name", "actor_3_name",
@@ -63,9 +65,11 @@ public class MyClientTask extends AsyncTask<String, Void, String> {
             }
 
 
+
+
             System.out.println(json.toString());
 
-            out.println(json.toString());
+            out.println(json.toString() + "\n");
             System.out.println("finished out");
 
             while (!in.ready());
@@ -75,8 +79,16 @@ public class MyClientTask extends AsyncTask<String, Void, String> {
             while (in.ready()) {
 //                    msg = msg + (char)in.read();
                 msg = in.readLine();
+//                System.out.println("msg: " + msg);
             }
-            System.out.println(msg);
+            System.out.println(msg.length());
+            System.out.println("final msg" + msg);
+            System.out.println("end");
+
+
+
+
+
 
 
         } catch (UnknownHostException e) {

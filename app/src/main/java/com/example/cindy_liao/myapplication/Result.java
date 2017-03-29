@@ -13,13 +13,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
-public class Result extends AppCompatActivity{
-    TextView movieTextView;
+public class Result extends AppCompatActivity implements resultAdapter.onClickHandler{
+    TextView linkTextView;
 
     JSONObject json = null;
     ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -40,32 +39,13 @@ public class Result extends AppCompatActivity{
         if (resultIntent.hasExtra(Intent.EXTRA_TEXT)){
             String intentText = resultIntent.getStringExtra(Intent.EXTRA_TEXT);
             setMovieList(intentText);
-//            try {
-//                json = new JSONObject(intentText);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            try {
-//                JSONArray m = json.getJSONArray("movies");
-//                for (int i = 0; i < m.length(); i++) {
-//                    Movie movie = new Movie();
-//                    JSONObject jsonObject = m.getJSONObject(i);
-//                    movie.setTitle(jsonObject.getString("movie_title"));
-//                    movie.setGernes(jsonObject.getString("genres"));
-//                    movie.setYear(jsonObject.getString("title_year"));
-//                    movie.setLink(jsonObject.getString("movie_imdb_link"));
-//                    movies.add(movie);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+
 
             System.out.println(movies);
 
             /*set RecyclerView and RecyclerView Adapter*/
             mRecycleView =(RecyclerView) findViewById(R.id.rv_results);
-            adapter =new resultAdapter(movies);
+            adapter =new resultAdapter(movies,this);
 
             LinearLayoutManager layoutManager=new LinearLayoutManager(this);
             mRecycleView.setAdapter(adapter);
@@ -102,9 +82,6 @@ public class Result extends AppCompatActivity{
         //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
 
         MyClientTask myClientTask2 = new MyClientTask();
-        /*
-            TODO: set start number
-         */
 
         String[] input2 =MainActivity.input;
         input2[0] = Integer.toString(1+offset*10);
@@ -134,7 +111,9 @@ public class Result extends AppCompatActivity{
         }
 
         try {
-            total_number = json.getInt("total_no");
+            total_number = json.getInt("total_num");
+
+
             start_number = json.getInt("start_no");
             JSONArray m = json.getJSONArray("movies");
             for (int i = 0; i < m.length(); i++) {
@@ -157,21 +136,21 @@ public class Result extends AppCompatActivity{
 
 
 
-//    @Override
-//    public void click(String s) {
-//        openWebPage(s);
+    @Override
+    public void click(String s) {
+        openWebPage(s);
+    }
+
+//    public void onClickTextView(View v){
+//        String url = linkTextView.getText().toString();
+//        openWebPage(url);
 //    }
-//
-////    public void onClickTextView(View v){
-////        String url = movieTextView.getText().toString();
-////        openWebPage(url);
-////    }
-//
-//    public void openWebPage(String url) {
-//        Uri webpage = Uri.parse(url);
-//        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//            startActivity(intent);
-//        }
-//    }
+
+    public void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 }

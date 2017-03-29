@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltViewHolder> {
     private ArrayList<Movie> movieArray;
-    //private final onClickHandler mOnClickHandler;
+    private final onClickHandler mOnClickHandler;
 
     interface onClickHandler{
         void click(String s);
@@ -24,11 +24,12 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
 //    public resultAdapter(onClickHandler handler){
 //        mOnClickHandler=handler;
 //    }
-    public resultAdapter(ArrayList<Movie> movieArrayList){
+    public resultAdapter(ArrayList<Movie> movieArrayList,onClickHandler handler){
         this.movieArray=movieArrayList;
+        mOnClickHandler=handler;
     }
 
-    public class resutltViewHolder extends RecyclerView.ViewHolder {
+    public class resutltViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView resutltTextViewLink;
         TextView resultTextViewName;
         TextView resultTextViewGenres;
@@ -39,15 +40,15 @@ public class resultAdapter extends RecyclerView.Adapter<resultAdapter.resutltVie
             resutltTextViewLink=(TextView) v.findViewById(R.id.tv_movieItemLink);
             resultTextViewGenres=(TextView) v.findViewById(R.id.tv_movieItemGenres);
             resultTextViewYear= (TextView) v.findViewById(R.id.tv_movieItemYear);
-            //v.setOnClickListener(this);
+            resutltTextViewLink.setOnClickListener(this);
         }
 
-//        @Override
-//        public void onClick(View v) {
-//            int posithon = getAdapterPosition();
-//            String movieData = movieArray[posithon];
-//            mOnClickHandler.click(movieData);
-//        }
+        @Override
+        public void onClick(View v) {
+            int posithon = getAdapterPosition();
+            String movieData = movieArray.get(posithon).getLink();
+            mOnClickHandler.click(movieData);
+        }
 
 
     }
